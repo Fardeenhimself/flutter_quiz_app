@@ -46,6 +46,8 @@ class _QuizPageState extends State<QuizPage> {
     'Titanic sank in 1912',
   ];
 
+  List<bool> answers = [false, true, false, true];
+
   int questionNumber = 0;
 
   @override
@@ -75,7 +77,12 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-
+                    bool correctAnswer = answers[questionNumber];
+                    if (correctAnswer == true) {
+                      print('Correct Answer');
+                    } else {
+                      print('Wrong Answer');
+                    }
                     questionNumber++;
                   });
                 },
@@ -96,7 +103,16 @@ class _QuizPageState extends State<QuizPage> {
               child: TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.red[700]),
                 onPressed: () {
-                  //False
+                  setState(() {
+                    // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+                    bool correctAnswer = answers[questionNumber];
+                    if (correctAnswer == false) {
+                      print('Correct Answer');
+                    } else {
+                      print('Wrong Answer');
+                    }
+                    questionNumber++;
+                  });
                 },
                 child: Text(
                   'False',
