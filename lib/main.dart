@@ -43,24 +43,29 @@ class _QuizPageState extends State<QuizPage> {
     // Icons get added automatically;
   ];
 
+  int correctResult = 0;
+
   void checkAnswer(bool clickedAnswer) {
     bool correctAnswer = listOfQuestion.getAnswer();
     return setState(() {
-      if (listOfQuestion.isFinished() == true) {
-        Alert(
-          context: context,
-          title: "Finished",
-          desc: "You've reached end of the quiz.",
-        ).show();
-        listOfQuestion.reset();
-        scoreKeeper = [];
-      } else {
+      if (listOfQuestion.isFinished() == false) {
         if (clickedAnswer == correctAnswer) {
           scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+          correctResult++;
         } else {
           scoreKeeper.add(Icon(Icons.close, color: Colors.red));
         }
         listOfQuestion.nextQuestion();
+      } else {
+        Alert(
+          context: context,
+          title: "Finished",
+          desc:
+              "You've reached end of the quiz. $correctResult Correct Answers",
+        ).show();
+        listOfQuestion.reset();
+        scoreKeeper = [];
+        correctResult = 0;
       }
     });
   }
@@ -78,7 +83,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsetsGeometry.all(10.0),
               child: Center(
                 child: Text(
-                  listOfQuestion.getQuestion(),
+                   listOfQuestion.getQuestion(),
                   style: TextStyle(fontSize: 25.0),
                 ),
               ),
