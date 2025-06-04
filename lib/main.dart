@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() => runApp(QuizzApp());
 
@@ -39,14 +40,21 @@ class _QuizPageState extends State<QuizPage> {
     // Icons get added automatically;
   ];
 
-  List<String> quizQuestions = [
-    'Bangladesh is a nucleared power country',
-    'Sheikh Hasina was a prime minister',
-    'Pakistan and India are friends',
-    'Titanic sank in 1912',
+  List<Question> questionBank = [
+    Question(
+      questionText: 'Bangladesh is a nuclear powered state',
+      questionAnswer: false,
+    ),
+    Question(
+      questionText: 'Sheikh Hasina was a good prime minister',
+      questionAnswer: false,
+    ),
+    Question(
+      questionText: 'India and Pakistan are friends',
+      questionAnswer: false,
+    ),
+    Question(questionText: 'Titanic sank on 1912', questionAnswer: true),
   ];
-
-  List<bool> answers = [false, true, false, true];
 
   int questionNumber = 0;
 
@@ -63,7 +71,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsetsGeometry.all(10.0),
               child: Center(
                 child: Text(
-                  quizQuestions[questionNumber],
+                  questionBank[questionNumber].questionText,
                   style: TextStyle(fontSize: 25.0),
                 ),
               ),
@@ -77,7 +85,8 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer = answers[questionNumber];
+                    bool correctAnswer =
+                        questionBank[questionNumber].questionAnswer;
                     if (correctAnswer == true) {
                       print('Correct Answer');
                     } else {
@@ -105,7 +114,8 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer = answers[questionNumber];
+                    bool correctAnswer =
+                        questionBank[questionNumber].questionAnswer;
                     if (correctAnswer == false) {
                       print('Correct Answer');
                     } else {
