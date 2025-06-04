@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list_of_question.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 ListOfQuestion listOfQuestion = ListOfQuestion();
 
@@ -42,6 +43,28 @@ class _QuizPageState extends State<QuizPage> {
     // Icons get added automatically;
   ];
 
+  void checkAnswer(bool clickedAnswer) {
+    bool correctAnswer = listOfQuestion.getAnswer();
+    return setState(() {
+      if (listOfQuestion.isFinished() == true) {
+        Alert(
+          context: context,
+          title: "Finished",
+          desc: "You've reached end of the quiz.",
+        ).show();
+        listOfQuestion.reset();
+        scoreKeeper = [];
+      } else {
+        if (clickedAnswer == correctAnswer) {
+          scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+        } else {
+          scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+        }
+        listOfQuestion.nextQuestion();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,16 +90,7 @@ class _QuizPageState extends State<QuizPage> {
               child: TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.green[700]),
                 onPressed: () {
-                  setState(() {
-                    // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer = listOfQuestion.getAnswer();
-                    if (correctAnswer == true) {
-                      print('Correct Answer');
-                    } else {
-                      print('Wrong Answer');
-                    }
-                    listOfQuestion.nextQuestion();
-                  });
+                  checkAnswer(true);
                 },
                 child: Text(
                   'True',
@@ -95,16 +109,7 @@ class _QuizPageState extends State<QuizPage> {
               child: TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.red[700]),
                 onPressed: () {
-                  setState(() {
-                    // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer = listOfQuestion.getAnswer();
-                    if (correctAnswer == false) {
-                      print('Correct Answer');
-                    } else {
-                      print('Wrong Answer');
-                    }
-                    listOfQuestion.nextQuestion();
-                  });
+                  checkAnswer(false);
                 },
                 child: Text(
                   'False',
