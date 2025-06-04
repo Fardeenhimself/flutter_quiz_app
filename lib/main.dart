@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'list_of_question.dart';
+
+ListOfQuestion listOfQuestion = ListOfQuestion();
 
 void main() => runApp(QuizzApp());
 
@@ -40,24 +42,6 @@ class _QuizPageState extends State<QuizPage> {
     // Icons get added automatically;
   ];
 
-  List<Question> questionBank = [
-    Question(
-      questionText: 'Bangladesh is a nuclear powered state',
-      questionAnswer: false,
-    ),
-    Question(
-      questionText: 'Sheikh Hasina was a good prime minister',
-      questionAnswer: false,
-    ),
-    Question(
-      questionText: 'India and Pakistan are friends',
-      questionAnswer: false,
-    ),
-    Question(questionText: 'Titanic sank on 1912', questionAnswer: true),
-  ];
-
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -71,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsetsGeometry.all(10.0),
               child: Center(
                 child: Text(
-                  questionBank[questionNumber].questionText,
+                  listOfQuestion.getQuestion(),
                   style: TextStyle(fontSize: 25.0),
                 ),
               ),
@@ -85,14 +69,13 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer =
-                        questionBank[questionNumber].questionAnswer;
+                    bool correctAnswer = listOfQuestion.getAnswer();
                     if (correctAnswer == true) {
                       print('Correct Answer');
                     } else {
                       print('Wrong Answer');
                     }
-                    questionNumber++;
+                    listOfQuestion.nextQuestion();
                   });
                 },
                 child: Text(
@@ -114,14 +97,13 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     // scoreKeeper.add(Icon(Icons.check, color: Colors.green));
-                    bool correctAnswer =
-                        questionBank[questionNumber].questionAnswer;
+                    bool correctAnswer = listOfQuestion.getAnswer();
                     if (correctAnswer == false) {
                       print('Correct Answer');
                     } else {
                       print('Wrong Answer');
                     }
-                    questionNumber++;
+                    listOfQuestion.nextQuestion();
                   });
                 },
                 child: Text(
